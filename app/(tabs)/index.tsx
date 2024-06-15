@@ -1,70 +1,132 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Button, Pressable, StyleSheet, TextInput } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { AntDesign, Fontisto } from '@expo/vector-icons';
+import { useState } from 'react';
+import { View } from 'react-native';
 
-export default function HomeScreen() {
+export default function SignInScreen() {
+  const [text, setText] = useState('');
+  const [signUpSelected, setSignUpSelected] = useState(false);
+  const [googleSignUpSelected, setGoogleSignUpSelected] = useState(false);
+
+  const submitSignUp = () => {
+    setSignUpSelected(true);
+    console.log("hi");
+  };
+
+  const submitGoogleSignUp = () => {
+    setGoogleSignUpSelected(true);
+    console.log("google says hi");
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
+    <ThemedView style={styles.backgoundContainer}>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <Fontisto name="coffeescript" size={24} color="white" />
+        <ThemedText type="title">Kofi</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
+
+      <ThemedView style={styles.signUpContainer}>
+        <ThemedText style={{textAlign: "center"}} type="subtitle">Crie sua conta</ThemedText>
+        <ThemedText type="defaultSemiBold">Digite seu email para se inscrever ao kofi</ThemedText>
+
+        <TextInput
+        style={styles.signUpInputs}
+        placeholder="email@dominio.com.br"
+        placeholderTextColor="#828282"
+        onChangeText={newText => setText(newText)}
+        defaultValue={text}
+        />
+
+        <Pressable
+          style={{...styles.signUpButton, backgroundColor: signUpSelected ? "#5B412D" : "#332114"}}
+          onPress={submitSignUp}
+          onPressOut={() => {setSignUpSelected(false)}}
+          accessibilityLabel="Sign up with email"
+        >
+          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>Inscreva-se com email</ThemedText>
+        </Pressable>
+
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{flex: 1, height: 1.5, backgroundColor: 'white'}} />
+          <View>
+            <ThemedText style={{width: 130, textAlign: 'center', color: "#828282"}}>ou continue com</ThemedText>
+          </View>
+          <View style={{flex: 1, height: 1.5, backgroundColor: 'white'}} />
+        </View>
+
+        <Pressable
+          style={{...styles.googleSignUpButton,  backgroundColor: googleSignUpSelected ? "#C1B4B4" : "#FFF"}}
+          onPress={submitGoogleSignUp}
+          onPressOut={() => {setGoogleSignUpSelected(false)}}
+          accessibilityLabel="Sign up with google"
+        >
+          <AntDesign name="google" size={22} color="black" />
+          <ThemedText type="defaultSemiBold" style={{color: "black"}}>Google</ThemedText>
+        </Pressable>
+
+        <View style={{flexDirection: 'row', alignItems: 'center', top: 20}}>
+            <ThemedText style={{width: 300, textAlign: 'center', color: "#828282", fontSize: 12}}>
+              Ao clicar em continuar, você concorda com nossos Termos de Serviço e nossa Política de Privacidade
+            </ThemedText>
+        </View>
+
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  backgoundContainer: {
+    flex: 1,
+    paddingTop: 150,
+    paddingHorizontal: 0,
+    gap: 100,
+    backgroundColor: "#5B371D",
+    flexDirection: 'column',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  titleContainer: {
+    backgroundColor: "#5B371D",
+    flexDirection: 'row',
+    gap: 15,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  signUpContainer: {
+    backgroundColor: "#5B371D",
+		textAlign: "center",
+    flexDirection: "column",
+		paddingHorizontal: 10,
+    gap: 20
   },
+  signUpInputs: {
+    height: 40,
+    fontSize: 14,
+    borderRadius: 8,
+    padding: 10,
+    color: "#828282",
+    backgroundColor: "#FFFFFF"
+  },
+  signUpButton: {
+    height: 40,
+    fontSize: 14,
+    borderRadius: 8,
+    padding: 8,
+    color: "#828282",
+    alignContent: "center",
+    backgroundColor: "#332114"
+  },
+  googleSignUpButton: {
+    flexDirection: "row",
+    height: 45,
+    fontSize: 16,
+    borderRadius: 8,
+    padding: 10,
+    gap: 5,
+    color: "black",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF"
+  }
 });
