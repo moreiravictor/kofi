@@ -5,14 +5,17 @@ import { ThemedView } from '@/components/ThemedView';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { useState } from 'react';
 import { View } from 'react-native';
+import { router } from 'expo-router';
 
 export default function SignInScreen() {
-  const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [signUpSelected, setSignUpSelected] = useState(false);
   const [googleSignUpSelected, setGoogleSignUpSelected] = useState(false);
 
   const submitSignUp = () => {
     setSignUpSelected(true);
+    router.replace({pathname: "/(tabs)/home"});
     console.log("hi");
   };
 
@@ -36,8 +39,17 @@ export default function SignInScreen() {
         style={styles.signUpInputs}
         placeholder="email@dominio.com.br"
         placeholderTextColor="#828282"
-        onChangeText={newText => setText(newText)}
-        defaultValue={text}
+        onChangeText={newText => setEmail(newText)}
+        defaultValue={email}
+        />
+
+        <TextInput
+        style={styles.signUpInputs}
+        placeholder="*******"
+        placeholderTextColor="#828282"
+        onChangeText={newText => setPassword(newText)}
+        defaultValue={password}
+        secureTextEntry
         />
 
         <Pressable
