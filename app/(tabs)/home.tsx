@@ -1,74 +1,72 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
 import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 
 export default function Home() {
-    console.log(" 1223123")
-  return (
-    <ThemedView style={styles.backgoundContainer}>
+    const reviews = [
+      {id: "1223", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "1243", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "125223", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "12523", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "1123", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "133223", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "15243", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "1253", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "1256673", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "1655423", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "1245453", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "12356576", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "176623", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "126753", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "16556723", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "12756563", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "57656756", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "567", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
+      {id: "567675", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""}
 
-            <Pressable
-          style={{...styles.signUpButton}}
-          onPress={() => router.replace("/")}
-          accessibilityLabel="go to Sign In"
-        >
-          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>HOME (go to sign in)</ThemedText>
-        </Pressable>
+  ];
+  return (
+    <ThemedView  style={styles.backgoundContainer}>
+      <FlatList
+        style={{width:"100%"}}
+        contentContainerStyle={styles.listContainerItems}
+        data={reviews}
+        renderItem={({item, index}) => {
+          return  (<ThemedView key={index} style={[styles.reviewContainer, styles.shadowProp]}>
+                    <ThemedText>{item.content}</ThemedText>
+                  </ThemedView>)
+        }}
+        keyExtractor={item => item.id}
+      />
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
+  shadowProp: {
+      shadowColor: '#27190E',
+      shadowOffset: {width: -4, height: 6},
+      shadowOpacity: 0.4,
+      shadowRadius: 2,
+      elevation: 8,
+      zIndex: 999,
+  },
   backgoundContainer: {
-    flex: 1,
-    paddingTop: 150,
+    backgroundColor: "#5B371D",
     paddingHorizontal: 0,
-    gap: 100,
-    backgroundColor: "#5B371D",
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  titleContainer: {
-    backgroundColor: "#5B371D",
-    flexDirection: 'row',
-    gap: 15,
-  },
-  signUpContainer: {
-    backgroundColor: "#5B371D",
-		textAlign: "center",
-    flexDirection: "column",
-		paddingHorizontal: 10,
-    gap: 20
-  },
-  signUpInputs: {
-    height: 40,
-    fontSize: 14,
-    borderRadius: 8,
-    padding: 10,
-    color: "#828282",
-    backgroundColor: "#FFFFFF"
-  },
-  signUpButton: {
-    height: 40,
-    fontSize: 14,
-    borderRadius: 8,
-    padding: 8,
-    color: "#828282",
-    alignContent: "center",
-    backgroundColor: "#332114"
-  },
-  googleSignUpButton: {
-    flexDirection: "row",
-    height: 45,
-    fontSize: 16,
-    borderRadius: 8,
-    padding: 10,
-    gap: 5,
-    color: "black",
+    flexGrow: 1,
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF"
-  }
+    flexDirection: 'column',
+  },
+  listContainerItems: {
+    paddingHorizontal: 20,
+  },
+  reviewContainer: {
+  marginBottom: 20,
+    borderRadius: 10,
+    padding: 15,
+    backgroundColor: "#482D1A",
+    height: 200
+  },
 });

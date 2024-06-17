@@ -29,14 +29,15 @@ const styles = StyleSheet.create({
         shadowOffset: {width: -4, height: 6},
         shadowOpacity: 0.4,
         shadowRadius: 2,
-    },
-    topBarContainer: {
         elevation: 20,
         zIndex: 999,
+    },
+    topBarContainer: {
         backgroundColor: "#6F4E37",
         marginTop: 50,
         marginHorizontal: 15,
         padding: 10,
+        marginBottom: 20,
         borderRadius: 10,
         flexDirection: "row",
         gap: 20,

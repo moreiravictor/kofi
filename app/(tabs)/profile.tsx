@@ -12,9 +12,9 @@ export default function Profile() {
             <Pressable
           style={{...styles.signUpButton}}
           onPress={() => router.replace("/")}
-          accessibilityLabel="go to Sign In"
+          accessibilityLabel="Sign out"
         >
-          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>PROFILE</ThemedText>
+          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>Sign out</ThemedText>
         </Pressable>
     </ThemedView>
   );
