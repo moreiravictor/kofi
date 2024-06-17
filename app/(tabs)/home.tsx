@@ -2,30 +2,11 @@ import { Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet }
 
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
+import { mockedReviews } from '../models/review';
+import { Octicons, SimpleLineIcons } from '@expo/vector-icons';
 
 export default function Home() {
-    const reviews = [
-      {id: "1223", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "1243", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "125223", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "12523", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "1123", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "133223", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "15243", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "1253", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "1256673", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "1655423", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "1245453", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "12356576", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "176623", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "126753", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "16556723", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "12756563", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "57656756", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "567", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""},
-      {id: "567675", content: "lorem ipsummmm", title: "Frutado maravilhoso", photo: ""}
-
-  ];
+    const reviews = mockedReviews;
   return (
     <ThemedView  style={styles.backgoundContainer}>
       <FlatList
@@ -34,7 +15,14 @@ export default function Home() {
         data={reviews}
         renderItem={({item, index}) => {
           return  (<ThemedView key={index} style={[styles.reviewContainer, styles.shadowProp]}>
-                    <ThemedText>{item.content}</ThemedText>
+                    <ThemedText type={"subtitle"}>{item.title}</ThemedText>
+                    <ThemedText style={{padding: 4, overflow: "hidden"}}>{item.content}</ThemedText>
+                    <ThemedView style={styles.reviewAttributes}>
+                      <ThemedText>50</ThemedText>
+                      <Octicons name="thumbsup" size={20} color="white" />
+                      <ThemedText>14</ThemedText>
+                      <SimpleLineIcons name="speech" size={20} color="white" />
+                    </ThemedView>
                   </ThemedView>)
         }}
         keyExtractor={item => item.id}
@@ -63,10 +51,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   reviewContainer: {
-  marginBottom: 20,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    marginBottom: 20,
     borderRadius: 10,
     padding: 15,
+    paddingLeft: 8,
+    paddingVertical: 30,
     backgroundColor: "#482D1A",
-    height: 200
+    height: 250
   },
+  reviewAttributes: {
+    paddingTop: 5,
+    backgroundColor: "transparent",
+    gap: 10,
+    flexDirection: "row",
+  }
 });
