@@ -32,7 +32,7 @@ export default function SignInScreen() {
       </ThemedView>
 
       <ThemedView style={styles.signUpContainer}>
-        <ThemedText style={{textAlign: "center"}} type="subtitle">Crie sua conta</ThemedText>
+        <ThemedText style={{textAlign: "center"}} type="subtitle">Crieeeaaae sua conta</ThemedText>
         <ThemedText type="defaultSemiBold">Digite seu email para se inscrever ao kofi</ThemedText>
 
         <TextInput
