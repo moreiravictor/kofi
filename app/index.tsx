@@ -6,6 +6,8 @@ import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { useState } from 'react';
 import { View } from 'react-native';
 import { router } from 'expo-router';
+import { GoogleSignIn } from '@/components/GoogleSignIn';
+
 
 export default function SignInScreen() {
   const [email, setEmail] = useState('');
@@ -32,7 +34,7 @@ export default function SignInScreen() {
       </ThemedView>
 
       <ThemedView style={styles.signUpContainer}>
-        <ThemedText style={{textAlign: "center"}} type="subtitle">Crieeeaaae sua conta</ThemedText>
+        <ThemedText style={{textAlign: "center"}} type="subtitle">Crie sua conta</ThemedText>
         <ThemedText type="defaultSemiBold">Digite seu email para se inscrever ao kofi</ThemedText>
 
         <TextInput
@@ -69,15 +71,9 @@ export default function SignInScreen() {
           <View style={{flex: 1, height: 1.5, backgroundColor: 'white'}} />
         </View>
 
-        <Pressable
-          style={{...styles.googleSignUpButton,  backgroundColor: googleSignUpSelected ? "#C1B4B4" : "#FFF"}}
-          onPress={submitGoogleSignUp}
-          onPressOut={() => {setGoogleSignUpSelected(false)}}
-          accessibilityLabel="Sign up with google"
-        >
-          <AntDesign name="google" size={22} color="black" />
-          <ThemedText type="defaultSemiBold" style={{color: "black"}}>Google</ThemedText>
-        </Pressable>
+         <View>
+          <GoogleSignIn></GoogleSignIn>
+        </View>
 
         <View style={{flexDirection: 'row', alignItems: 'center', top: 20}}>
             <ThemedText style={{width: 300, textAlign: 'center', color: "#828282", fontSize: 12}}>

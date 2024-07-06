@@ -39,12 +39,7 @@
     },
     "plugins": [
       "expo-router",
-      [
-        "@react-native-google-signin/google-signin",
-        {
-          "iosUrlScheme": "com.googleusercontent.apps.486870820793-ommiaig4u53pj7mbg1mkmmu45kgg1aem"
-        }
-      ]
+      "@react-native-google-signin/google-signin"
     ],
     "experiments": {
       "typedRoutes": true
@@ -56,6 +51,12 @@
       "eas": {
         "projectId": "a5986216-3a0c-43d4-9e71-5ebf7ba30120"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a5986216-3a0c-43d4-9e71-5ebf7ba30120"
     }
   }
 }
