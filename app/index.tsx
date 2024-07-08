@@ -21,11 +21,6 @@ export default function SignInScreen() {
     console.log("hi");
   };
 
-  const submitGoogleSignUp = () => {
-    setGoogleSignUpSelected(true);
-    console.log("google says hi");
-  };
-
   return (
     <ThemedView style={styles.backgoundContainer}>
       <ThemedView style={styles.titleContainer}>

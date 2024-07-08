@@ -3,6 +3,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 export default function Profile() {
     console.log(" 1223123")
@@ -11,7 +12,11 @@ export default function Profile() {
 
             <Pressable
           style={{...styles.signUpButton}}
-          onPress={() => router.replace("/")}
+          onPress={ async () => {
+            await GoogleSignin.signOut();
+            router.replace("/")
+            }
+          }
           accessibilityLabel="Sign out"
         >
           <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>Sign out</ThemedText>
