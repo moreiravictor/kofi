@@ -2,38 +2,39 @@ import { Pressable, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
-import { getUser } from "@/src/helpers/utils";
+import { getUser, resetUser } from "@/src/helpers/utils";
 import { User } from "@/src/requests/models/user";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 
 export default function Profile() {
-  const [user, setUser] = useState<User>();
+  const [userInfo, setUserInfo] = useState<User>();
 
   useEffect(() => {
     (async () => {
       const user = await getUser();
-      setUser(user);
+      setUserInfo(user);
     })();
-  }, [setUser]);
+  }, [setUserInfo]);
 
   return (
     <ThemedView style={styles.backgoundContainer}>
       <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
-        {user?.username}
+        {userInfo?.username}
       </ThemedText>
       <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
-        {user?.email}
+        {userInfo?.email}
       </ThemedText>
       <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
-        {user?.profilePhoto?.url}
+        {userInfo?.profilePhoto?.url}
       </ThemedText>
 
       <Pressable
         style={{ ...styles.signUpButton }}
         onPress={async () => {
           await GoogleSignin.signOut();
+          await resetUser();
           router.replace("/");
         }}
         accessibilityLabel="Sign out"

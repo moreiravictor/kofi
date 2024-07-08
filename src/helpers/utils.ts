@@ -1,8 +1,12 @@
 import { User } from "@/src/requests/models/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export async function setUser(signedInUser: User) {
+export async function setUser(signedInUser: User | null) {
   await AsyncStorage.setItem("user", JSON.stringify(signedInUser));
+}
+
+export async function resetUser() {
+  await AsyncStorage.removeItem("user");
 }
 
 export async function getUser(): Promise<User> {

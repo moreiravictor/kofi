@@ -1,9 +1,13 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 
 import { GoogleSignIn } from "@/src/components/GoogleSignIn";
+import { SimpleDialog } from "@/src/components/SimpleDialog";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
+import { setUser } from "@/src/helpers/utils";
+import { emailSignIn } from "@/src/requests/mutations/user";
 import { Fontisto } from "@expo/vector-icons";
+import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
@@ -11,11 +15,31 @@ import { View } from "react-native";
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signUpSelected, setSignUpSelected] = useState(false);
+  const [signInSelected, setSignInSelected] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
-  const submitSignUp = () => {
-    setSignUpSelected(true);
-    router.replace({ pathname: "/(tabs)/home" });
+  const emailSignInMutation = useMutation({
+    mutationFn: (args: { email: string; password: string }) =>
+      emailSignIn(args.email, args.password),
+  });
+
+  const submitEmailSignIn = async () => {
+    setSignInSelected(true);
+
+    try {
+      const foundUser = await emailSignInMutation.mutateAsync({
+        email,
+        password,
+      });
+
+      await setUser(foundUser);
+
+      router.replace({ pathname: "/(tabs)/home" });
+    } catch (e) {
+      console.warn(e);
+
+      setModalVisible(true);
+    }
   };
 
   return (
@@ -26,16 +50,9 @@ export default function SignInScreen() {
       </ThemedView>
 
       <ThemedView style={styles.signUpContainer}>
-        <ThemedText style={{ textAlign: "center" }} type="subtitle">
-          Crie sua conta
-        </ThemedText>
-        <ThemedText type="defaultSemiBold">
-          Digite seu email para se inscrever ao kofi
-        </ThemedText>
-
         <TextInput
           style={styles.signUpInputs}
-          placeholder="email@dominio.com.br"
+          placeholder="e-maill"
           placeholderTextColor="#828282"
           onChangeText={(newText) => setEmail(newText)}
           defaultValue={email}
@@ -43,26 +60,26 @@ export default function SignInScreen() {
 
         <TextInput
           style={styles.signUpInputs}
-          placeholder="*******"
+          placeholder="************"
           placeholderTextColor="#828282"
           onChangeText={(newText) => setPassword(newText)}
           defaultValue={password}
-          secureTextEntry
+          secureTextEntry={true}
         />
 
         <Pressable
           style={{
             ...styles.signUpButton,
-            backgroundColor: signUpSelected ? "#5B412D" : "#332114",
+            backgroundColor: signInSelected ? "#5B412D" : "#332114",
           }}
-          onPress={submitSignUp}
+          onPress={submitEmailSignIn}
           onPressOut={() => {
-            setSignUpSelected(false);
+            setSignInSelected(false);
           }}
-          accessibilityLabel="Sign up with email"
+          accessibilityLabel="Sign in with email"
         >
           <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
-            Inscreva-se com email
+            ENTRAR
           </ThemedText>
         </Pressable>
 
@@ -96,6 +113,13 @@ export default function SignInScreen() {
           </ThemedText>
         </View>
       </ThemedView>
+
+      <SimpleDialog
+        content="Login Incorreto"
+        buttonContent="OK"
+        visibility={isModalVisible}
+        setDialogVisibility={setModalVisible}
+      ></SimpleDialog>
     </ThemedView>
   );
 }

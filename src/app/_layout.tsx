@@ -4,6 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PaperProvider } from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -27,12 +28,14 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Stack screenOptions={{ animation: "slide_from_right" }}>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </QueryClientProvider>
+    <PaperProvider>
+      <QueryClientProvider client={queryClient}>
+        <Stack screenOptions={{ animation: "slide_from_right" }}>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+      </QueryClientProvider>
+    </PaperProvider>
   );
 }
