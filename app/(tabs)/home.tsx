@@ -1,31 +1,38 @@
-import { Dimensions, FlatList, Pressable, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from "react-native";
 
-import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
-import { mockedReviews } from '../models/review';
-import { Octicons, SimpleLineIcons } from '@expo/vector-icons';
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { Octicons, SimpleLineIcons } from "@expo/vector-icons";
+import { mockedReviews } from "../models/review";
 
 export default function Home() {
-    const reviews = mockedReviews;
+  const reviews = mockedReviews;
   return (
-    <ThemedView  style={styles.backgoundContainer}>
+    <ThemedView style={styles.backgoundContainer}>
       <FlatList
-        style={{width:"100%"}}
+        style={{ width: "100%" }}
         contentContainerStyle={styles.listContainerItems}
         data={reviews}
-        renderItem={({item, index}) => {
-          return  (<ThemedView key={index} style={[styles.reviewContainer, styles.shadowProp]}>
-                    <ThemedText type={"subtitle"}>{item.title}</ThemedText>
-                    <ThemedText style={{padding: 4, overflow: "hidden"}}>{item.content}</ThemedText>
-                    <ThemedView style={styles.reviewAttributes}>
-                      <ThemedText>50</ThemedText>
-                      <Octicons name="thumbsup" size={20} color="white" />
-                      <ThemedText>14</ThemedText>
-                      <SimpleLineIcons name="speech" size={20} color="white" />
-                    </ThemedView>
-                  </ThemedView>)
+        renderItem={({ item, index }) => {
+          return (
+            <ThemedView
+              key={index}
+              style={[styles.reviewContainer, styles.shadowProp]}
+            >
+              <ThemedText type={"subtitle"}>{item.title}</ThemedText>
+              <ThemedText style={{ padding: 4, overflow: "hidden" }}>
+                {item.content}
+              </ThemedText>
+              <ThemedView style={styles.reviewAttributes}>
+                <ThemedText>50</ThemedText>
+                <Octicons name="thumbsup" size={20} color="white" />
+                <ThemedText>14</ThemedText>
+                <SimpleLineIcons name="speech" size={20} color="white" />
+              </ThemedView>
+            </ThemedView>
+          );
         }}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
       />
     </ThemedView>
   );
@@ -33,19 +40,19 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   shadowProp: {
-      shadowColor: '#27190E',
-      shadowOffset: {width: -4, height: 6},
-      shadowOpacity: 0.4,
-      shadowRadius: 2,
-      elevation: 8,
-      zIndex: 999,
+    shadowColor: "#27190E",
+    shadowOffset: { width: -4, height: 6 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
+    elevation: 8,
+    zIndex: 999,
   },
   backgoundContainer: {
     backgroundColor: "#5B371D",
     paddingHorizontal: 0,
     flexGrow: 1,
     alignItems: "center",
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   listContainerItems: {
     paddingHorizontal: 20,
@@ -61,12 +68,12 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingVertical: 30,
     backgroundColor: "#482D1A",
-    height: 250
+    height: 250,
   },
   reviewAttributes: {
     paddingTop: 5,
     backgroundColor: "transparent",
     gap: 10,
     flexDirection: "row",
-  }
+  },
 });

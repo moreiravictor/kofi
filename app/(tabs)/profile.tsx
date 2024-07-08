@@ -1,39 +1,47 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from "react-native";
 
-import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { getUser } from '@/helpers/utils';
-import { useEffect, useState } from 'react';
-import { User } from '@/requests/models/user';
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { getUser } from "@/helpers/utils";
+import { User } from "@/requests/models/user";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { router } from "expo-router";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
   const [user, setUser] = useState<User>();
 
-  useEffect(() => {(async () => {
-            const user = await getUser();
-            setUser(user);
-        })()
-      }, [setUser]);
+  useEffect(() => {
+    (async () => {
+      const user = await getUser();
+      setUser(user);
+    })();
+  }, [setUser]);
 
   return (
     <ThemedView style={styles.backgoundContainer}>
-          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>{user?.username}</ThemedText>
-          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>{user?.email}</ThemedText>
-          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>{user?.profilePhoto?.url}</ThemedText>
+      <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
+        {user?.username}
+      </ThemedText>
+      <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
+        {user?.email}
+      </ThemedText>
+      <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
+        {user?.profilePhoto?.url}
+      </ThemedText>
 
-            <Pressable
-          style={{...styles.signUpButton}}
-          onPress={ async () => {
-            await GoogleSignin.signOut();
-            router.replace("/")
-            }
-          }
-          accessibilityLabel="Sign out"
-        >
-          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>Sign out</ThemedText>
-        </Pressable>
+      <Pressable
+        style={{ ...styles.signUpButton }}
+        onPress={async () => {
+          await GoogleSignin.signOut();
+          router.replace("/");
+        }}
+        accessibilityLabel="Sign out"
+      >
+        <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
+          Sign out
+        </ThemedText>
+      </Pressable>
     </ThemedView>
   );
 }
@@ -45,20 +53,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     gap: 100,
     backgroundColor: "#5B371D",
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
   },
   titleContainer: {
     backgroundColor: "#5B371D",
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 15,
   },
   signUpContainer: {
     backgroundColor: "#5B371D",
-		textAlign: "center",
+    textAlign: "center",
     flexDirection: "column",
-		paddingHorizontal: 10,
-    gap: 20
+    paddingHorizontal: 10,
+    gap: 20,
   },
   signUpInputs: {
     height: 40,
@@ -66,7 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     color: "#828282",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   signUpButton: {
     height: 40,
@@ -75,7 +83,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "#828282",
     alignContent: "center",
-    backgroundColor: "#332114"
+    backgroundColor: "#332114",
   },
   googleSignUpButton: {
     flexDirection: "row",
@@ -87,6 +95,6 @@ const styles = StyleSheet.create({
     color: "black",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF"
-  }
+    backgroundColor: "#FFFFFF",
+  },
 });

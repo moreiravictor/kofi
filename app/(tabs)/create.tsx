@@ -1,21 +1,22 @@
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from "react-native";
 
-import { ThemedView } from '@/components/ThemedView';
-import { router } from 'expo-router';
-import { ThemedText } from '@/components/ThemedText';
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { router } from "expo-router";
 
 export default function Create() {
-    console.log(" 1223123")
+  console.log(" 1223123");
   return (
     <ThemedView style={styles.backgoundContainer}>
-
-            <Pressable
-          style={{...styles.signUpButton}}
-          onPress={() => router.replace("/")}
-          accessibilityLabel="go to Sign In"
-        >
-          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>CREATE</ThemedText>
-        </Pressable>
+      <Pressable
+        style={{ ...styles.signUpButton }}
+        onPress={() => router.replace("/")}
+        accessibilityLabel="go to Sign In"
+      >
+        <ThemedText type="defaultSemiBold" style={{ textAlign: "center" }}>
+          CREATE
+        </ThemedText>
+      </Pressable>
     </ThemedView>
   );
 }
@@ -27,20 +28,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     gap: 100,
     backgroundColor: "#5B371D",
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
   },
   titleContainer: {
     backgroundColor: "#5B371D",
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 15,
   },
   signUpContainer: {
     backgroundColor: "#5B371D",
-		textAlign: "center",
+    textAlign: "center",
     flexDirection: "column",
-		paddingHorizontal: 10,
-    gap: 20
+    paddingHorizontal: 10,
+    gap: 20,
   },
   signUpInputs: {
     height: 40,
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     color: "#828282",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   signUpButton: {
     height: 40,
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: "#828282",
     alignContent: "center",
-    backgroundColor: "#332114"
+    backgroundColor: "#332114",
   },
   googleSignUpButton: {
     flexDirection: "row",
@@ -69,6 +70,6 @@ const styles = StyleSheet.create({
     color: "black",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFFFFF"
-  }
+    backgroundColor: "#FFFFFF",
+  },
 });
