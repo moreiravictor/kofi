@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet } from "react-native";
 
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/src/components/ThemedText";
+import { ThemedView } from "@/src/components/ThemedView";
 import { router } from "expo-router";
 
 export default function Create() {

@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet } from "react-native";
 
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/src/components/ThemedText";
+import { ThemedView } from "@/src/components/ThemedView";
 import { Octicons, SimpleLineIcons } from "@expo/vector-icons";
 import { mockedReviews } from "../models/review";
 

@@ -1,7 +1,7 @@
-import { setUser } from "@/helpers/utils";
+import { setUser } from "@/src/helpers/utils";
 import {
-  GoogleSignin,
-  GoogleSigninButton,
+    GoogleSignin,
+    GoogleSigninButton,
 } from "@react-native-google-signin/google-signin";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";

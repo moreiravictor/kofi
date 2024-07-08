@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet } from "react-native";
 
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { getUser } from "@/helpers/utils";
-import { User } from "@/requests/models/user";
+import { ThemedText } from "@/src/components/ThemedText";
+import { ThemedView } from "@/src/components/ThemedView";
+import { getUser } from "@/src/helpers/utils";
+import { User } from "@/src/requests/models/user";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";

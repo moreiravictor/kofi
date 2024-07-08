@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 
-import { GoogleSignIn } from "@/components/GoogleSignIn";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { GoogleSignIn } from "@/src/components/GoogleSignIn";
+import { ThemedText } from "@/src/components/ThemedText";
+import { ThemedView } from "@/src/components/ThemedView";
 import { Fontisto } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";

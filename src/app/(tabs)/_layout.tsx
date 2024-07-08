@@ -1,5 +1,5 @@
-import { ThemedView } from "@/components/ThemedView";
-import { TopBar } from "@/components/TopBar";
+import { ThemedView } from "@/src/components/ThemedView";
+import { TopBar } from "@/src/components/TopBar";
 import { EvilIcons, FontAwesome, Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 

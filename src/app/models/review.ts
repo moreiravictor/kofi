@@ -1,4 +1,4 @@
-import { User } from "@/requests/models/user";
+import { User } from "@/src/requests/models/user";
 
 export interface ReviewTag {
   id: string;
