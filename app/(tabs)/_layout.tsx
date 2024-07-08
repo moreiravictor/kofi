@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useColorScheme } from '@/helpers/hooks/useColorScheme';
 import SignInScreen from '..';
 import { Slot, Stack, Tabs } from 'expo-router';
 import Home from './home';

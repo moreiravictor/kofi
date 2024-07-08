@@ -1,8 +1,8 @@
-import { GoogleSignin, GoogleSigninButton, User } from "@react-native-google-signin/google-signin";
+import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
 import { useMutation } from "@tanstack/react-query";
 import { googleSignIn } from "../requests/mutations/user";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUser, setUser } from "@/helpers/utils";
 
 export function GoogleSignIn() {
   GoogleSignin.configure({
@@ -24,8 +24,8 @@ export function GoogleSignIn() {
                   if (user.idToken) {
                     const signedInUser = await googleSignInMutation.mutateAsync(user.idToken);
 
-                    await AsyncStorage.setItem("user", JSON.stringify(signedInUser));
-                    console.warn(await AsyncStorage.getItem("user"));
+                    await setUser(signedInUser);
+
                     router.replace({pathname: "/(tabs)/home"});
                   } else {
                     throw new Error("No idToken");

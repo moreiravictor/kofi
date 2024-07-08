@@ -4,11 +4,24 @@ import { ThemedView } from '@/components/ThemedView';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { getUser } from '@/helpers/utils';
+import { useEffect, useState } from 'react';
+import { User } from '@/requests/models/user';
 
 export default function Profile() {
-    console.log(" 1223123")
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {(async () => {
+            const user = await getUser();
+            setUser(user);
+        })()
+      }, [setUser]);
+
   return (
     <ThemedView style={styles.backgoundContainer}>
+          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>{user?.username}</ThemedText>
+          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>{user?.email}</ThemedText>
+          <ThemedText type="defaultSemiBold" style={{textAlign: "center"}}>{user?.profilePhoto?.url}</ThemedText>
 
             <Pressable
           style={{...styles.signUpButton}}
