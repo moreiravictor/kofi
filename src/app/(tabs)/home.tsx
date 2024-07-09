@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     zIndex: 999,
   },
   backgoundContainer: {
-    backgroundColor: "#5B371D",
+    backgroundColor: "#28170A",
     paddingHorizontal: 0,
     flexGrow: 1,
     alignItems: "center",

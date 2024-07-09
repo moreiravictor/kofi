@@ -62,7 +62,7 @@ export default function SignUpScreen() {
 
   return (
     <ThemedView style={styles.backgoundContainer}>
-      <KofiLogo></KofiLogo>
+      <KofiLogo width={"60%"} height={"12%"}></KofiLogo>
 
       <ThemedView style={styles.subtitleContainer}>
         <ThemedText type="subtitle">Crie sua conta</ThemedText>

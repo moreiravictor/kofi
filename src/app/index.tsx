@@ -53,7 +53,7 @@ export default function SignInScreen() {
 
   return (
     <ThemedView style={styles.backgoundContainer}>
-      <KofiLogo></KofiLogo>
+      <KofiLogo width={"60%"} height={"12%"}></KofiLogo>
 
       <ThemedView style={styles.signInContainer}>
         <TextInput
