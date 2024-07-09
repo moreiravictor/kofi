@@ -37,3 +37,23 @@ export async function emailSignIn(
 
   return (await res.json()) as User;
 }
+
+export async function emailSignUp(
+  email: string,
+  password: string
+): Promise<User> {
+  const res = await fetch(
+    `${process.env.EXPO_PUBLIC_KOFI_API_BASE_URL}/users/register`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Falha ao realizar registro");
+  }
+
+  return (await res.json()) as User;
+}

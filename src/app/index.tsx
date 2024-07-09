@@ -6,11 +6,14 @@ import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import { setUser } from "@/src/helpers/utils";
 import { emailSignIn } from "@/src/requests/mutations/user";
-import { Fontisto } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
+import { Button } from "react-native-paper";
+
+import assets from "@/src/assets";
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
@@ -44,15 +47,14 @@ export default function SignInScreen() {
 
   return (
     <ThemedView style={styles.backgoundContainer}>
-      <ThemedView style={styles.titleContainer}>
-        <Fontisto name="coffeescript" size={24} color="white" />
-        <ThemedText type="title">Kofi</ThemedText>
-      </ThemedView>
+      <View style={styles.titleContainer}>
+        <Image source={assets.logo} style={styles.logo} contentFit="contain" />
+      </View>
 
-      <ThemedView style={styles.signUpContainer}>
+      <ThemedView style={styles.signInContainer}>
         <TextInput
           style={styles.signUpInputs}
-          placeholder="e-maill"
+          placeholder="E-mail"
           placeholderTextColor="#828282"
           onChangeText={(newText) => setEmail(newText)}
           defaultValue={email}
@@ -60,7 +62,7 @@ export default function SignInScreen() {
 
         <TextInput
           style={styles.signUpInputs}
-          placeholder="************"
+          placeholder="Senha"
           placeholderTextColor="#828282"
           onChangeText={(newText) => setPassword(newText)}
           defaultValue={password}
@@ -70,7 +72,7 @@ export default function SignInScreen() {
         <Pressable
           style={{
             ...styles.signUpButton,
-            backgroundColor: signInSelected ? "#5B412D" : "#332114",
+            backgroundColor: signInSelected ? "#5B412D" : "#6c4121",
           }}
           onPress={submitEmailSignIn}
           onPressOut={() => {
@@ -84,33 +86,15 @@ export default function SignInScreen() {
         </Pressable>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: "white" }} />
+          <Image source={assets.lightBar} style={styles.lightBar}></Image>
           <View>
-            <ThemedText
-              style={{ width: 130, textAlign: "center", color: "#828282" }}
-            >
-              ou continue com
-            </ThemedText>
+            <ThemedText style={styles.continueWith}>ou continue com</ThemedText>
           </View>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: "white" }} />
+          <Image source={assets.lightBar} style={styles.lightBar}></Image>
         </View>
 
         <View>
           <GoogleSignIn></GoogleSignIn>
-        </View>
-
-        <View style={{ flexDirection: "row", alignItems: "center", top: 20 }}>
-          <ThemedText
-            style={{
-              width: 300,
-              textAlign: "center",
-              color: "#828282",
-              fontSize: 12,
-            }}
-          >
-            Ao clicar em continuar, você concorda com nossos Termos de Serviço e
-            nossa Política de Privacidade
-          </ThemedText>
         </View>
       </ThemedView>
 
@@ -120,39 +104,57 @@ export default function SignInScreen() {
         visibility={isModalVisible}
         setDialogVisibility={setModalVisible}
       ></SimpleDialog>
+
+      <View style={styles.signUpContainer}>
+        <ThemedText style={styles.signUpText}>Não tem cadastro?</ThemedText>
+        <Button
+          textColor="#e3d2c3"
+          buttonColor="#a66933"
+          mode="elevated"
+          onPress={() => router.push("sign-up")}
+        >
+          Crie sua conta
+        </Button>
+      </View>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
+  logo: {
+    width: "60%",
+  },
   backgoundContainer: {
     flex: 1,
     paddingTop: 150,
     paddingHorizontal: 0,
     gap: 100,
-    backgroundColor: "#5B371D",
+    backgroundColor: "#29170b",
     flexDirection: "column",
     alignItems: "center",
+    fontFamily: "Montserrat_300Light",
   },
   titleContainer: {
-    backgroundColor: "#5B371D",
+    backgroundColor: "#29170b",
     flexDirection: "row",
-    gap: 15,
+    width: "100%",
+    height: "12%",
+    justifyContent: "center",
   },
-  signUpContainer: {
-    backgroundColor: "#5B371D",
+  signInContainer: {
+    backgroundColor: "#29170b",
     textAlign: "center",
     flexDirection: "column",
     paddingHorizontal: 10,
     gap: 20,
   },
   signUpInputs: {
-    height: 40,
-    fontSize: 14,
-    borderRadius: 8,
-    padding: 10,
-    color: "#828282",
-    backgroundColor: "#FFFFFF",
+    height: 50,
+    fontSize: 16,
+    borderRadius: 12,
+    padding: 8,
+    color: "#968F89",
+    backgroundColor: "#e3d1c3",
   },
   signUpButton: {
     height: 40,
@@ -174,5 +176,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFFFFF",
+  },
+  lightBar: { flex: 1, height: 1.5, marginTop: 5 },
+  continueWith: {
+    width: 120,
+    fontSize: 12,
+    textAlign: "center",
+    color: "#E2D1C3",
+  },
+  signUpContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    bottom: 40,
+    gap: 15,
+    alignSelf: "center",
+  },
+  signUpText: {
+    textAlign: "center",
+    color: "#aa7239",
+    fontSize: 14,
   },
 });
