@@ -1,11 +1,12 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 
+import { KofiLogo } from "@/src/components/KofiLogo";
+import { LightBar } from "@/src/components/LightBar";
 import { SimpleDialog } from "@/src/components/SimpleDialog";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import { setUser } from "@/src/helpers/utils";
 import { emailSignUp } from "@/src/requests/mutations/user";
-import { AntDesign, Fontisto } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -37,7 +38,7 @@ export default function SignUpScreen() {
 
       router.replace({ pathname: "/(tabs)/home" });
     } catch (e) {
-      console.warn(e);
+      console.log(e);
 
       setModalVisible(true);
     }
@@ -61,10 +62,7 @@ export default function SignUpScreen() {
 
   return (
     <ThemedView style={styles.backgoundContainer}>
-      <ThemedView style={styles.titleContainer}>
-        <Fontisto name="coffeescript" size={24} color="white" />
-        <ThemedText type="title">Kofi</ThemedText>
-      </ThemedView>
+      <KofiLogo></KofiLogo>
 
       <ThemedView style={styles.subtitleContainer}>
         <ThemedText type="subtitle">Crie sua conta</ThemedText>
@@ -77,7 +75,7 @@ export default function SignUpScreen() {
         <TextInput
           style={styles.signUpInputs}
           placeholder="nome@email.com"
-          placeholderTextColor="#828282"
+          placeholderTextColor="#968F89"
           onChangeText={(newText) => setEmail(newText)}
           defaultValue={email}
         />
@@ -85,7 +83,7 @@ export default function SignUpScreen() {
         <TextInput
           style={styles.signUpInputs}
           placeholder="Crie sua senha"
-          placeholderTextColor="#828282"
+          placeholderTextColor="#968F89"
           onChangeText={(newText) => setPassword(newText)}
           defaultValue={password}
           secureTextEntry={true}
@@ -93,34 +91,33 @@ export default function SignUpScreen() {
 
         <ThemedView style={styles.passwordTipsContainer}>
           <ThemedText
-            type="default"
             style={{
               color: validatePassword().hasMinimumLength ? "green" : "red",
+              fontSize: 13,
             }}
           >
             • Mínimo de 8 caracteres
           </ThemedText>
-          <AntDesign name="check" size={12} color="green" />
           <ThemedText
-            type="default"
             style={{
               color: validatePassword().hasSpecialChars ? "green" : "red",
+              fontSize: 13,
             }}
           >
             • Utilize números e caracteres especiais
           </ThemedText>
           <ThemedText
-            type="default"
             style={{
               color: validatePassword().hasUpperAndLowerCase ? "green" : "red",
+              fontSize: 13,
             }}
           >
             • Utilize caracteres maiúsculos e minúsculos
           </ThemedText>
           <ThemedText
-            type="default"
             style={{
               color: validatePassword().passwordsMatch ? "green" : "red",
+              fontSize: 13,
             }}
           >
             • As senhas devem ser iguais
@@ -130,7 +127,7 @@ export default function SignUpScreen() {
         <TextInput
           style={styles.signUpInputs}
           placeholder="Confirme sua senha"
-          placeholderTextColor="#828282"
+          placeholderTextColor="#968F89"
           onChangeText={(newText) => setPasswordConfirmation(newText)}
           defaultValue={passwordConfirmation}
           secureTextEntry={true}
@@ -153,15 +150,11 @@ export default function SignUpScreen() {
         </Pressable>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: "white" }} />
+          <LightBar></LightBar>
           <Pressable onPress={() => router.replace("/")}>
-            <ThemedText
-              style={{ width: 130, textAlign: "center", color: "#968478" }}
-            >
-              ou faça seu login
-            </ThemedText>
+            <ThemedText style={styles.orLogin}>ou faça seu login</ThemedText>
           </Pressable>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: "white" }} />
+          <LightBar></LightBar>
         </View>
       </ThemedView>
 
@@ -181,30 +174,29 @@ const styles = StyleSheet.create({
     paddingTop: 150,
     paddingHorizontal: 0,
     gap: 50,
-    backgroundColor: "#29170b",
+    backgroundColor: "#28170A",
     flexDirection: "column",
     alignItems: "center",
     fontFamily: "Montserrat_300Light",
   },
   titleContainer: {
-    backgroundColor: "#29170b",
+    backgroundColor: "#28170A",
     flexDirection: "row",
     gap: 15,
   },
   passwordTipsContainer: {
     flexDirection: "column",
-    gap: 5,
-    fontSize: 10,
+    gap: 2,
     backgroundColor: "transparent",
   },
   subtitleContainer: {
-    backgroundColor: "#29170b",
+    backgroundColor: "#28170A",
     flexDirection: "column",
     alignItems: "center",
     gap: 5,
   },
   signUpContainer: {
-    backgroundColor: "#29170b",
+    backgroundColor: "#28170A",
     textAlign: "center",
     flexDirection: "column",
     paddingHorizontal: 10,
@@ -212,11 +204,12 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   signUpInputs: {
-    height: 40,
-    fontSize: 14,
-    borderRadius: 8,
-    padding: 10,
-    color: "#828282",
+    height: 50,
+    fontSize: 16,
+    borderRadius: 12,
+    padding: 8,
+    paddingHorizontal: 16,
+    color: "#968F89",
     backgroundColor: "#e3d1c3",
   },
   signUpButton: {
@@ -228,16 +221,10 @@ const styles = StyleSheet.create({
     alignContent: "center",
     backgroundColor: "#332114",
   },
-  googleSignUpButton: {
-    flexDirection: "row",
-    height: 45,
-    fontSize: 16,
-    borderRadius: 8,
-    padding: 10,
-    gap: 5,
-    color: "black",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF",
+  orLogin: {
+    width: 120,
+    fontSize: 12,
+    textAlign: "center",
+    color: "#E2D1C3",
   },
 });
