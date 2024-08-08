@@ -4,7 +4,7 @@ import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import { getUser, resetUser } from "@/src/helpers/utils";
 import { User } from "@/src/requests/models/user";
-import { GoogleSignin } from "@react-native-google-signin/google-signin";
+// import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 
@@ -33,7 +33,7 @@ export default function Profile() {
       <Pressable
         style={{ ...styles.signUpButton }}
         onPress={async () => {
-          await GoogleSignin.signOut();
+          // await GoogleSignin.signOut();
           await resetUser();
           router.replace("/");
         }}

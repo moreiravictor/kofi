@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 
-import { GoogleSignIn } from "@/src/components/GoogleSignIn";
 import { SimpleDialog } from "@/src/components/SimpleDialog";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
@@ -113,9 +112,9 @@ export default function SignInScreen() {
           <LightBar></LightBar>
         </View>
 
-        <View>
+        {/* <View>
           <GoogleSignIn></GoogleSignIn>
-        </View>
+        </View> */}
       </ThemedView>
 
       <SimpleDialog
@@ -157,6 +156,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     paddingHorizontal: 10,
     gap: 20,
+    width: "80%",
   },
   signUpInputs: {
     height: 50,

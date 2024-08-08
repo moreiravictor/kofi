@@ -27,7 +27,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/kofi-xicara-clara.png",
+        "foregroundImage": "./assets/images/kofi-xicara-1024.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.kofi"
@@ -35,7 +35,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/kofi-xicara-clara.png"
+      "favicon": "./assets/images/kofi-xicara-1024.png"
     },
     "plugins": [
       "expo-router",
