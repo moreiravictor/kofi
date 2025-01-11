@@ -28,12 +28,19 @@ export default function Home() {
                   contentFit="fill"
                 />
                 <ThemedView style={styles.subtitleContainer}>
-                  <ThemedText type={"subtitle"} style={{ color: "#E2D1C3" }}>
+                  <ThemedText
+                    type={"subtitle"}
+                    style={{ color: "#E2D1C3" }}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     {review.title}
                   </ThemedText>
                   <ThemedText
-                    type={"default"}
-                    style={{ fontSize: 13, color: "#E2D1C3" }}
+                    style={{
+                      fontSize: 11,
+                      color: "#E2D1C3",
+                    }}
                   >
                     {`@${review.topics[0].name} por @${review.user.username}`}
                   </ThemedText>
@@ -94,6 +101,7 @@ export default function Home() {
                     startingValue={review.grade}
                     ratingColor="#BF8634"
                     tintColor="#6B4122"
+                    style={{ paddingVertical: 0 }}
                     ratingBackgroundColor="#E2D1C3"
                     imageSize={32}
                   />
@@ -158,11 +166,11 @@ const styles = StyleSheet.create({
     padding: 10,
     gap: 8,
     paddingTop: 15,
+    display: "flex",
     flexDirection: "row",
     width: "100%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    flexGrow: 1,
     justifyContent: "flex-start",
     backgroundColor: "#8E5935",
   },
@@ -170,5 +178,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#8E5935",
     color: "#E2D1C3",
+    flex: 1,
   },
 });

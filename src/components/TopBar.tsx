@@ -17,7 +17,6 @@ export function TopBar() {
 const styles = StyleSheet.create({
   topBarContainer: {
     backgroundColor: "#33251C",
-    marginBottom: 20,
     paddingTop: 45,
     paddingBottom: 15,
     paddingHorizontal: 20,

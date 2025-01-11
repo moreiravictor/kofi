@@ -15,7 +15,12 @@ import {
   Montserrat_900Black,
 } from "@expo-google-fonts/montserrat";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PaperProvider } from "react-native-paper";
+import { Platform } from "react-native";
+import {
+  configureFonts,
+  MD3LightTheme,
+  PaperProvider,
+} from "react-native-paper";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -46,8 +51,28 @@ export default function RootLayout() {
     return null;
   }
 
+  const fontConfig = {
+    default: {
+      fontFamily: Platform.select({
+        web: "Montserrat_300Light",
+        ios: "Montserrat_300Light",
+        android: "Montserrat_300Light",
+        default: "Montserrat_300Light",
+      }),
+      fontWeight: "300" as const,
+      letterSpacing: 0.5,
+      lineHeight: 22,
+      fontSize: 20,
+    },
+  };
+
+  const theme = {
+    ...MD3LightTheme,
+    fonts: configureFonts({ config: fontConfig }),
+  };
+
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
         <Stack screenOptions={{ animation: "slide_from_right" }}>
           <Stack.Screen name="index" options={{ headerShown: false }} />
