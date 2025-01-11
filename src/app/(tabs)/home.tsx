@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <ThemedView style={styles.backgoundContainer}>
       <FlatList
-        style={{ width: "100%" }}
+        style={{ width: "100%", flex: 1 }}
         contentContainerStyle={styles.listContainerItems}
         data={reviews}
         renderItem={({ item: review, index }) => {
@@ -39,12 +39,32 @@ export default function Home() {
                   </ThemedText>
                 </ThemedView>
               </ThemedView>
+              {review.photos.length ? (
+                <ThemedView
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "100%",
+                    height: 120,
+                    paddingHorizontal: 10,
+                    marginTop: 12,
+                  }}
+                >
+                  <Image
+                    source={{ uri: review.photos[0].url }}
+                    style={styles.previewPhoto}
+                    contentFit="cover"
+                  />
+                </ThemedView>
+              ) : null}
               <ThemedText
                 style={{
                   overflow: "hidden",
                   flexGrow: 2,
                   padding: 10,
-                  height: 190,
+                  marginBottom: 10,
+                  height: 100,
                   color: "#E2D1C3",
                 }}
               >
@@ -100,7 +120,7 @@ const styles = StyleSheet.create({
   backgoundContainer: {
     backgroundColor: "#28170A",
     paddingHorizontal: 0,
-    flexGrow: 1,
+    flex: 1,
     alignItems: "center",
     flexDirection: "column",
   },
@@ -110,7 +130,6 @@ const styles = StyleSheet.create({
   reviewContainer: {
     overflow: "hidden",
     color: "#E2D1C3",
-    flex: 1,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
@@ -131,6 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#6B4122",
     flexDirection: "row",
   },
+  previewPhoto: { width: "100%", height: "100%", borderRadius: 10 },
   profilePhoto: { width: 50, height: 50, borderRadius: 25 },
   titleContainer: {
     color: "#E2D1C3",
