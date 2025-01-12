@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#28170A",
     flexDirection: "column",
     alignItems: "center",
-    // fontFamily: "Montserrat_300Light",
   },
   signInContainer: {
     backgroundColor: "#28170A",

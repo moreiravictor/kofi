@@ -144,7 +144,7 @@ export default function Search() {
         numberOfLines={1}
         ellipsizeMode="tail"
         style={styles.cardTitle}
-      >{`${item.title} por @ ${item.author}`}</ThemedText>
+      >{`${item.title} por @${item.author}`}</ThemedText>
     </Card>
   );
 

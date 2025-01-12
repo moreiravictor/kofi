@@ -82,6 +82,12 @@ export default function TabLayout() {
               ),
           }}
         />
+        <Tabs.Screen
+          name="post"
+          options={{
+            tabBarButton: () => null,
+          }}
+        />
       </Tabs>
     </ThemedView>
   );
