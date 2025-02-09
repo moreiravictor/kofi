@@ -13,6 +13,7 @@ import { Button } from "react-native-paper";
 
 import { KofiLogo } from "@/src/components/KofiLogo";
 import { LightBar } from "@/src/components/LightBar";
+import { useLoading } from "@/src/contexts/layout/hook";
 import { Feather } from "@expo/vector-icons";
 
 export default function SignInScreen() {
@@ -21,6 +22,8 @@ export default function SignInScreen() {
   const [signInSelected, setSignInSelected] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const loader = useLoading();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -35,6 +38,8 @@ export default function SignInScreen() {
     setSignInSelected(true);
 
     try {
+      loader.showLoader();
+
       const foundUser = await emailSignInMutation.mutateAsync({
         email,
         password,
@@ -43,10 +48,10 @@ export default function SignInScreen() {
       await setUser(foundUser);
 
       router.replace({ pathname: "/(tabs)/home" });
-    } catch (e) {
-      console.warn(e);
-
+    } catch {
       setModalVisible(true);
+    } finally {
+      loader.hideLoader();
     }
   };
 

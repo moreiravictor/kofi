@@ -3,6 +3,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
+import Loader from "@/src/components/Loading";
+import { LoadingContextProvider } from "@/src/contexts/layout/layoutContext";
 import {
   Montserrat_100Thin,
   Montserrat_200ExtraLight,
@@ -73,14 +75,17 @@ export default function RootLayout() {
 
   return (
     <PaperProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <Stack screenOptions={{ animation: "slide_from_right" }}>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </QueryClientProvider>
+      <LoadingContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <Stack screenOptions={{ animation: "slide_from_right" }}>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <Loader />
+        </QueryClientProvider>
+      </LoadingContextProvider>
     </PaperProvider>
   );
 }
