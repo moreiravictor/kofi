@@ -1,57 +1,56 @@
-import { Review } from "@/src/app/models/review";
+import { PostAttributes } from "@/src/components/PostAttributes";
+import { ProfileImage } from "@/src/components/ProfileImage";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
-import { AntDesign, FontAwesome6, Ionicons } from "@expo/vector-icons";
-import { Rating } from "@kolking/react-native-rating";
+import { Post } from "@/src/requests/services/kofi/models/post";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 export interface PostPreviewProps {
-  review: Review;
+  post: Post;
 }
 
-export const PostPreview = ({ review }: PostPreviewProps) => {
+export const PostPreview = ({ post }: PostPreviewProps) => {
   const navigator = useRouter();
 
-  const openPost = (review: Review) => {
+  const openPost = (post: Post) => {
     navigator.push({
       pathname: "post",
-      params: { post: JSON.stringify(review) },
+      params: { post: JSON.stringify(post) },
     });
   };
 
   return (
     <ThemedView
-      key={review.id}
+      key={post.id}
       style={[styles.reviewContainer, styles.shadowProp]}
     >
-      <ThemedView style={styles.titleContainer}>
-        <Image
-          source={{ uri: review.user.profilePhoto?.url }}
-          style={styles.profilePhoto}
-          contentFit="fill"
-        />
-        <ThemedView style={styles.subtitleContainer}>
-          <ThemedText
-            type={"subtitle"}
-            style={{ color: "#E2D1C3" }}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {review.title}
-          </ThemedText>
-          <ThemedText
-            style={{
-              fontSize: 11,
-              color: "#E2D1C3",
-            }}
-          >
-            {`@${review.topics[0].name} por @${review.user.username}`}
-          </ThemedText>
+      <TouchableOpacity onPress={() => openPost(post)}>
+        <ThemedView style={styles.titleContainer}>
+          <ProfileImage post={post} />
+          <ThemedView style={styles.subtitleContainer}>
+            <ThemedText
+              type={"subtitle"}
+              style={{ color: "#E2D1C3" }}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {post.title}
+            </ThemedText>
+            <ThemedText
+              style={{
+                fontSize: 11,
+                color: "#E2D1C3",
+              }}
+            >
+              {`@${post.topics[0].name} por @${post.user.username}`}
+            </ThemedText>
+          </ThemedView>
         </ThemedView>
-      </ThemedView>
-      {review.photos.length ? (
+      </TouchableOpacity>
+
+      {post.photos.length ? (
         <ThemedView
           style={{
             display: "flex",
@@ -64,58 +63,25 @@ export const PostPreview = ({ review }: PostPreviewProps) => {
           }}
         >
           <Image
-            source={{ uri: review.photos[0].url }}
+            source={{ uri: post.photos[0].url }}
             style={styles.previewPhoto}
             contentFit="cover"
           />
         </ThemedView>
       ) : null}
-      <TouchableOpacity onPress={() => openPost(review)}>
-        <ThemedText
-          style={{
-            overflow: "hidden",
-            flexGrow: 2,
-            padding: 10,
-            marginBottom: 10,
-            height: 100,
-            color: "#E2D1C3",
-          }}
-        >
-          {review.content}
-        </ThemedText>
-      </TouchableOpacity>
-      <ThemedView style={styles.reviewAttributes}>
-        <ThemedView
-          style={{
-            backgroundColor: "transparent",
-            flexDirection: "row",
-            gap: 15,
-          }}
-        >
-          <AntDesign name="hearto" size={27} color="#E2D1C3" />
-          <Ionicons name="chatbox-outline" size={27} color="#E2D1C3" />
-          <FontAwesome6 name="paper-plane" size={25} color="#E2D1C3" />
-        </ThemedView>
-        <ThemedView
-          style={{
-            backgroundColor: "transparent",
-            flexDirection: "row",
-          }}
-        >
-          <Rating
-            size={22}
-            fillColor="#BF8634"
-            baseColor="#E2D1C3"
-            disabled
-            variant="stars"
-            touchColor="blue"
-            rating={review.grade}
-            style={{
-              paddingVertical: 0,
-            }}
-          />
-        </ThemedView>
-      </ThemedView>
+      <ThemedText
+        style={{
+          overflow: "hidden",
+          padding: 10,
+          paddingTop: 12,
+          marginBottom: 10,
+          height: 150,
+          color: "#E2D1C3",
+        }}
+      >
+        {post.content}
+      </ThemedText>
+      <PostAttributes post={post} />
     </ThemedView>
   );
 };
@@ -131,6 +97,7 @@ const styles = StyleSheet.create({
   },
   reviewContainer: {
     overflow: "hidden",
+    height: 380,
     color: "#E2D1C3",
     display: "flex",
     flexDirection: "column",
@@ -140,20 +107,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: "#8E5935",
   },
-  reviewAttributes: {
-    flexGrow: 1,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    height: 60,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    backgroundColor: "#6B4122",
-    flexDirection: "row",
-  },
   previewPhoto: { width: "100%", height: "100%", borderRadius: 10 },
-  profilePhoto: { width: 50, height: 50, borderRadius: 25 },
   titleContainer: {
     color: "#E2D1C3",
     height: 65,

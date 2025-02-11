@@ -2,19 +2,32 @@ import { FlatList, StyleSheet } from "react-native";
 
 import { PostPreview } from "@/src/components/PostPreview";
 import { ThemedView } from "@/src/components/ThemedView";
-import { mockedReviews } from "../models/review";
+import useGetLatestPostsPaginated from "@/src/requests/queries/useGetLatestPostsPaginated";
+import { Post } from "@/src/requests/services/kofi/models/post";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const reviews = mockedReviews;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [page, setPage] = useState<number>(1);
+
+  const { data: postsData } = useGetLatestPostsPaginated.useQuery({
+    params: { pagination: { limit: 10, page } },
+  });
+
+  useEffect(() => {
+    if (postsData !== undefined) {
+      setPosts(postsData.items);
+    }
+  }, [postsData]);
 
   return (
     <ThemedView style={styles.backgoundContainer}>
       <FlatList
         style={{ width: "100%", flex: 1 }}
         contentContainerStyle={styles.listContainerItems}
-        data={reviews}
-        renderItem={({ item: review }) => {
-          return <PostPreview review={review} />;
+        data={posts}
+        renderItem={({ item: post }) => {
+          return <PostPreview post={post} />;
         }}
         keyExtractor={(item) => item.id}
       />

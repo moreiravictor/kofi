@@ -9,7 +9,7 @@ export default function Post() {
 
   return (
     <ThemedView style={styles.backgoundContainer}>
-      <PostCompleteView review={parsedPost} />
+      <PostCompleteView post={parsedPost} />
     </ThemedView>
   );
 }

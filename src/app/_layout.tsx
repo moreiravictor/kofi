@@ -4,6 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import Loader from "@/src/components/Loading";
+import { KofiToast } from "@/src/components/toast";
 import { LoadingContextProvider } from "@/src/contexts/layout/layoutContext";
 import {
   Montserrat_100Thin,
@@ -83,6 +84,7 @@ export default function RootLayout() {
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
           </Stack>
+          <KofiToast />
           <Loader />
         </QueryClientProvider>
       </LoadingContextProvider>

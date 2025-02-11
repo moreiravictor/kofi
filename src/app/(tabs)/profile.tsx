@@ -3,7 +3,7 @@ import { Pressable, StyleSheet } from "react-native";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import { getUser, resetUser } from "@/src/helpers/utils";
-import { User } from "@/src/requests/models/user";
+import { User } from "@/src/requests/services/kofi/models/user";
 // import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";

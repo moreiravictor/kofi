@@ -5,7 +5,7 @@ import {
 } from "@react-native-google-signin/google-signin";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
-import { googleSignIn } from "../requests/mutations/user";
+import { googleSignIn } from "../requests/services/kofi/user";
 
 export function GoogleSignIn() {
   GoogleSignin.configure({

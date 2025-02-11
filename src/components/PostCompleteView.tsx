@@ -1,36 +1,28 @@
-import { Review } from "@/src/app/models/review";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
-import { AntDesign, FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
-import { Dimensions, FlatList, StyleSheet } from "react-native";
+import { Dimensions, FlatList, ScrollView, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
 // import { Rating } from "react-native-ratings";
+import { PostAttributes } from "@/src/components/PostAttributes";
+import { ProfileImage } from "@/src/components/ProfileImage";
+import { Post } from "@/src/requests/services/kofi/models/post";
 import Feather from "@expo/vector-icons/Feather";
-import { Rating } from "@kolking/react-native-rating";
 
 export interface PostCompleteViewProps {
-  review: Review;
+  post: Post;
 }
 
-export const PostCompleteView = ({ review }: PostCompleteViewProps) => {
-  const likePost = (review: Review) => {
-    console.log("liked");
-  };
-
+export const PostCompleteView = ({ post }: PostCompleteViewProps) => {
   const screenWidth = Dimensions.get("window").width;
 
   return (
     <ThemedView
-      key={review.id}
+      key={post.id}
       style={[styles.reviewContainer, styles.shadowProp]}
     >
       <ThemedView style={styles.titleContainer}>
-        <Image
-          source={{ uri: review.user.profilePhoto?.url }}
-          style={styles.profilePhoto}
-          contentFit="fill"
-        />
+        <ProfileImage post={post} />
         <ThemedView style={styles.subtitleContainer}>
           <ThemedText
             type={"subtitle"}
@@ -38,7 +30,7 @@ export const PostCompleteView = ({ review }: PostCompleteViewProps) => {
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {review.title}
+            {post.title}
           </ThemedText>
           <ThemedText
             style={{
@@ -46,11 +38,11 @@ export const PostCompleteView = ({ review }: PostCompleteViewProps) => {
               color: "#E2D1C3",
             }}
           >
-            {`@${review.topics[0].name} por @${review.user.username}`}
+            {`@${post.topics[0].name} por @${post.user.username}`}
           </ThemedText>
         </ThemedView>
       </ThemedView>
-      {review.photos.length ? (
+      {post.photos.length ? (
         <FlatList
           style={{
             width: "100%",
@@ -60,7 +52,7 @@ export const PostCompleteView = ({ review }: PostCompleteViewProps) => {
           scrollEnabled={true}
           pagingEnabled
           showsHorizontalScrollIndicator={false}
-          data={review.photos}
+          data={post.photos}
           renderItem={({ item: photo, index }) => {
             return (
               <ThemedView
@@ -84,13 +76,13 @@ export const PostCompleteView = ({ review }: PostCompleteViewProps) => {
                     zIndex: 999,
                     top: 10,
                     right: 15,
-                    height: 20,
+                    height: 32,
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     backgroundColor: "hsla(0, 8.00%, 82.90%, 0.50)",
                   }}
-                >{`${index + 1}/${review.photos.length}`}</Chip>
+                >{`${index + 1}/${post.photos.length}`}</Chip>
                 <Image
                   source={{ uri: photo.url }}
                   style={styles.previewPhoto}
@@ -102,84 +94,55 @@ export const PostCompleteView = ({ review }: PostCompleteViewProps) => {
           keyExtractor={(item) => item.id}
         />
       ) : null}
-      <ThemedText
+      <ScrollView
         style={{
           overflow: "scroll",
           flexGrow: 2,
           padding: 10,
           height: 180,
-          color: "#E2D1C3",
         }}
       >
-        {review.content}
-      </ThemedText>
-      <ThemedView style={styles.reviewAttributes}>
-        <ThemedView
-          style={{
-            backgroundColor: "transparent",
-            flexDirection: "row",
-            gap: 15,
-          }}
-        >
-          <AntDesign name="hearto" size={20} color="#E2D1C3" />
-          <Ionicons name="chatbox-outline" size={22} color="#E2D1C3" />
-          <FontAwesome6 name="paper-plane" size={20} color="#E2D1C3" />
-        </ThemedView>
-        <ThemedView
-          style={{
-            backgroundColor: "#28170A",
-            flexDirection: "row",
-          }}
-        >
-          <Rating
-            size={16}
-            fillColor="#BF8634"
-            baseColor="#E2D1C3"
-            disabled
-            variant="stars"
-            touchColor="blue"
-            rating={review.grade}
+        <ThemedText style={{ color: "#E2D1C3", paddingBottom: 10 }}>
+          {post.content}
+        </ThemedText>
+      </ScrollView>
+      <PostAttributes post={post} styles={styles.reviewAttributes} />
+      {post.comments?.length ? (
+        <ThemedView style={[styles.commentsPreview]}>
+          <ThemedView
             style={{
-              paddingVertical: 0,
+              backgroundColor: "none",
+              display: "flex",
+              flexDirection: "row",
+              gap: 6,
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
             }}
-          />
-        </ThemedView>
-      </ThemedView>
-
-      <ThemedView style={[styles.commentsPreview]}>
-        <ThemedView
-          style={{
-            backgroundColor: "none",
-            display: "flex",
-            flexDirection: "row",
-            gap: 6,
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            source={{ uri: review.comments[0].user?.profilePhoto?.url }}
-            style={styles.commentPreviewProfilePhoto}
-            contentFit="fill"
-          />
-          <ThemedText
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={{ fontSize: 12, backgroundColor: "none", fontWeight: "700" }}
           >
-            {review.comments[0].user?.username}
-          </ThemedText>
-          <ThemedText
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={{ fontSize: 10, backgroundColor: "none", width: 220 }}
-          >
-            {review.comments[0].content}
-          </ThemedText>
-          <Feather name="coffee" size={12} color={"white"}></Feather>
+            <ProfileImage post={post} />
+            <ThemedText
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={{
+                fontSize: 12,
+                backgroundColor: "none",
+                fontWeight: "700",
+              }}
+            >
+              {post.comments[0].user?.username}
+            </ThemedText>
+            <ThemedText
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={{ fontSize: 10, backgroundColor: "none", width: 220 }}
+            >
+              {post.comments[0].content}
+            </ThemedText>
+            <Feather name="coffee" size={12} color={"white"}></Feather>
+          </ThemedView>
         </ThemedView>
-      </ThemedView>
+      ) : null}
     </ThemedView>
   );
 };
@@ -234,7 +197,6 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 10,
   },
-  profilePhoto: { width: 50, height: 50, borderRadius: 25 },
   commentPreviewProfilePhoto: { width: 20, height: 20, borderRadius: 10 },
   titleContainer: {
     color: "#E2D1C3",

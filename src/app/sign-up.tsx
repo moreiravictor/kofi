@@ -6,7 +6,7 @@ import { SimpleDialog } from "@/src/components/SimpleDialog";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
 import { setUser } from "@/src/helpers/utils";
-import { emailSignUp } from "@/src/requests/mutations/user";
+import { emailSignUp } from "@/src/requests/services/kofi/user";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useState } from "react";

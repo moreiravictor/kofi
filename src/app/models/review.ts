@@ -1,4 +1,4 @@
-import { Photo, User } from "@/src/requests/models/user";
+import { Photo, User } from "@/src/requests/services/kofi/models/user";
 import { faker } from "@faker-js/faker";
 
 export interface ReviewTag {

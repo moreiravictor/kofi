@@ -1,58 +1,52 @@
 import { Pressable, StyleSheet, TextInput } from "react-native";
 
-import { SimpleDialog } from "@/src/components/SimpleDialog";
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
-import { setUser } from "@/src/helpers/utils";
-import { emailSignIn } from "@/src/requests/mutations/user";
-import { useMutation } from "@tanstack/react-query";
+import { getUser, setUser } from "@/src/helpers/utils";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
 
 import { KofiLogo } from "@/src/components/KofiLogo";
 import { LightBar } from "@/src/components/LightBar";
-import { useLoading } from "@/src/contexts/layout/hook";
+import useSignIn from "@/src/requests/mutations/signIn";
 import { Feather } from "@expo/vector-icons";
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signInSelected, setSignInSelected] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const loader = useLoading();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const emailSignInMutation = useMutation({
-    mutationFn: (args: { email: string; password: string }) =>
-      emailSignIn(args.email, args.password),
+  const { mutateAsync: mutateSignIn } = useSignIn.useMutation({
+    request: { email, password },
+    pageLoader: "floating",
+    errorSetup: { message: "Login Incorreto" },
   });
+
+  useEffect(() => {
+    async function loggedInUser() {
+      const user = await getUser();
+      if (user !== undefined) {
+        router.replace({ pathname: "/(tabs)/home" });
+      }
+    }
+    loggedInUser();
+  }, []);
 
   const submitEmailSignIn = async () => {
     setSignInSelected(true);
 
-    try {
-      loader.showLoader();
+    const foundUser = await mutateSignIn();
 
-      const foundUser = await emailSignInMutation.mutateAsync({
-        email,
-        password,
-      });
+    await setUser(foundUser);
 
-      await setUser(foundUser);
-
-      router.replace({ pathname: "/(tabs)/home" });
-    } catch {
-      setModalVisible(true);
-    } finally {
-      loader.hideLoader();
-    }
+    router.replace({ pathname: "/(tabs)/home" });
   };
 
   return (
@@ -64,7 +58,7 @@ export default function SignInScreen() {
           style={styles.signUpInputs}
           placeholder="E-mail"
           placeholderTextColor="#968F89"
-          onChangeText={(newText) => setEmail(newText)}
+          onChangeText={(newText) => setEmail(newText.toLowerCase())}
           defaultValue={email}
         />
 
@@ -121,14 +115,6 @@ export default function SignInScreen() {
           <GoogleSignIn></GoogleSignIn>
         </View> */}
       </ThemedView>
-
-      <SimpleDialog
-        content="Login Incorreto"
-        buttonContent="OK"
-        visibility={isModalVisible}
-        setDialogVisibility={setModalVisible}
-      ></SimpleDialog>
-
       <View style={styles.signUpContainer}>
         <ThemedText style={styles.signUpText}>Não tem cadastro?</ThemedText>
         <Button

@@ -1,4 +1,4 @@
-import { User } from "@/src/requests/models/user";
+import { User } from "@/src/requests/services/kofi/models/user";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function setUser(signedInUser: User | null) {
