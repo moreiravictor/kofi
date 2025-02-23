@@ -7,7 +7,6 @@ import { Chip } from "react-native-paper";
 import { PostAttributes } from "@/src/components/PostAttributes";
 import { ProfileImage } from "@/src/components/ProfileImage";
 import { Post } from "@/src/requests/services/kofi/models/post";
-import Feather from "@expo/vector-icons/Feather";
 
 export interface PostCompleteViewProps {
   post: Post;
@@ -46,7 +45,7 @@ export const PostCompleteView = ({ post }: PostCompleteViewProps) => {
         <FlatList
           style={{
             width: "100%",
-            height: 200,
+            height: 300,
           }}
           horizontal
           scrollEnabled={true}
@@ -63,7 +62,6 @@ export const PostCompleteView = ({ post }: PostCompleteViewProps) => {
                   alignItems: "center",
                   justifyContent: "center",
                   width: screenWidth,
-                  height: 200,
                   paddingHorizontal: 10,
                   marginTop: 12,
                   backgroundColor: "none",
@@ -94,55 +92,18 @@ export const PostCompleteView = ({ post }: PostCompleteViewProps) => {
           keyExtractor={(item) => item.id}
         />
       ) : null}
+      <PostAttributes post={post} styles={styles.reviewAttributes} />
       <ScrollView
         style={{
           overflow: "scroll",
-          flexGrow: 2,
+          flexGrow: 1,
           padding: 10,
-          height: 180,
         }}
       >
         <ThemedText style={{ color: "#E2D1C3", paddingBottom: 10 }}>
           {post.content}
         </ThemedText>
       </ScrollView>
-      <PostAttributes post={post} styles={styles.reviewAttributes} />
-      {post.comments?.length ? (
-        <ThemedView style={[styles.commentsPreview]}>
-          <ThemedView
-            style={{
-              backgroundColor: "none",
-              display: "flex",
-              flexDirection: "row",
-              gap: 6,
-              width: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <ProfileImage post={post} />
-            <ThemedText
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={{
-                fontSize: 12,
-                backgroundColor: "none",
-                fontWeight: "700",
-              }}
-            >
-              {post.comments[0].user?.username}
-            </ThemedText>
-            <ThemedText
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={{ fontSize: 10, backgroundColor: "none", width: 220 }}
-            >
-              {post.comments[0].content}
-            </ThemedText>
-            <Feather name="coffee" size={12} color={"white"}></Feather>
-          </ThemedView>
-        </ThemedView>
-      ) : null}
     </ThemedView>
   );
 };
@@ -160,6 +121,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     color: "#E2D1C3",
     display: "flex",
+    flex: 1,
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "flex-start",
@@ -169,20 +131,8 @@ const styles = StyleSheet.create({
     backgroundColor: "none",
   },
   reviewAttributes: {
-    flexGrow: 1,
     width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    height: 45,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    backgroundColor: "none",
-    flexDirection: "row",
-  },
-  commentsPreview: {
-    flexGrow: 1,
-    width: "100%",
+    paddingTop: 15,
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 10,
@@ -197,7 +147,6 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 10,
   },
-  commentPreviewProfilePhoto: { width: 20, height: 20, borderRadius: 10 },
   titleContainer: {
     color: "#E2D1C3",
     height: 65,

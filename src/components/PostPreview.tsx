@@ -16,7 +16,7 @@ export const PostPreview = ({ post }: PostPreviewProps) => {
 
   const openPost = (post: Post) => {
     navigator.push({
-      pathname: "post",
+      pathname: "/post",
       params: { post: JSON.stringify(post) },
     });
   };
@@ -59,7 +59,7 @@ export const PostPreview = ({ post }: PostPreviewProps) => {
             width: "100%",
             height: 120,
             paddingHorizontal: 10,
-            marginTop: 12,
+            marginTop: 5,
           }}
         >
           <Image
@@ -73,8 +73,6 @@ export const PostPreview = ({ post }: PostPreviewProps) => {
         style={{
           overflow: "hidden",
           padding: 10,
-          paddingTop: 12,
-          marginBottom: 10,
           height: 150,
           color: "#E2D1C3",
         }}
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
   },
   reviewContainer: {
     overflow: "hidden",
-    height: 380,
+    height: 395,
     color: "#E2D1C3",
     display: "flex",
     flexDirection: "column",

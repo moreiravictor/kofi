@@ -4,7 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
 import Loader from "@/src/components/Loading";
-import { KofiToast } from "@/src/components/toast";
+import { KofiToast } from "@/src/components/Toast";
 import { LoadingContextProvider } from "@/src/contexts/layout/layoutContext";
 import {
   Montserrat_100Thin,
@@ -19,11 +19,14 @@ import {
 } from "@expo-google-fonts/montserrat";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Platform } from "react-native";
+import { SheetProvider } from "react-native-actions-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   configureFonts,
   MD3LightTheme,
   PaperProvider,
 } from "react-native-paper";
+import "../sheets";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -75,19 +78,27 @@ export default function RootLayout() {
   };
 
   return (
-    <PaperProvider theme={theme}>
-      <LoadingContextProvider>
-        <QueryClientProvider client={queryClient}>
-          <Stack screenOptions={{ animation: "slide_from_right" }}>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="sign-up" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <KofiToast />
-          <Loader />
-        </QueryClientProvider>
-      </LoadingContextProvider>
-    </PaperProvider>
+    <GestureHandlerRootView
+      style={{
+        flex: 1,
+      }}
+    >
+      <SheetProvider>
+        <PaperProvider theme={theme}>
+          <LoadingContextProvider>
+            <QueryClientProvider client={queryClient}>
+              <Stack screenOptions={{ animation: "slide_from_right" }}>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+              <KofiToast />
+              <Loader />
+            </QueryClientProvider>
+          </LoadingContextProvider>
+        </PaperProvider>
+      </SheetProvider>
+    </GestureHandlerRootView>
   );
 }
