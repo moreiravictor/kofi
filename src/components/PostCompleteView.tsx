@@ -21,7 +21,7 @@ export const PostCompleteView = ({ post }: PostCompleteViewProps) => {
       style={[styles.reviewContainer, styles.shadowProp]}
     >
       <ThemedView style={styles.titleContainer}>
-        <ProfileImage post={post} />
+        <ProfileImage photoUrl={post.user.profilePhoto?.url} />
         <ThemedView style={styles.subtitleContainer}>
           <ThemedText
             type={"subtitle"}

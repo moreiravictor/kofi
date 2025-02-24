@@ -30,7 +30,7 @@ export interface Coffee {
 export interface Comment {
   id: string;
   content: string;
-  user?: User;
+  user: User;
 }
 
 export interface Review {

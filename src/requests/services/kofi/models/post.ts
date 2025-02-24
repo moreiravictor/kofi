@@ -16,7 +16,7 @@ export interface Photo {
 export interface Comment {
   id: string;
   content: string;
-  user?: User;
+  user: User;
 }
 
 export interface Brand {

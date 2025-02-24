@@ -1,15 +1,13 @@
 import assets from "@/src/assets";
-import { Post } from "@/src/requests/services/kofi/models/post";
 import { Image } from "expo-image";
 
-export const ProfileImage = ({ post }: { post: Post }) => {
-  console.log(post.user.profilePhoto?.url);
+export const ProfileImage = ({ photoUrl }: { photoUrl?: string }) => {
   return (
     <Image
       source={
-        post.user.profilePhoto?.url === null
+        photoUrl
           ? {
-              uri: post.user.profilePhoto.url,
+              uri: photoUrl,
             }
           : assets.undefinedProfilePhoto
       }
