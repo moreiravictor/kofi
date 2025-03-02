@@ -1,7 +1,14 @@
 import assets from "@/src/assets";
-import { Image } from "expo-image";
+import { Image, ImageProps } from "expo-image";
+import { StyleSheet } from "react-native";
 
-export const ProfileImage = ({ photoUrl }: { photoUrl?: string }) => {
+export const ProfileImage = ({
+  photoUrl,
+  style: sx,
+}: {
+  photoUrl?: string;
+  style?: ImageProps["style"];
+}) => {
   return (
     <Image
       source={
@@ -11,7 +18,10 @@ export const ProfileImage = ({ photoUrl }: { photoUrl?: string }) => {
             }
           : assets.undefinedProfilePhoto
       }
-      style={{ width: 40, height: 40, borderRadius: 20 }}
+      style={StyleSheet.flatten([
+        { width: 40, height: 40, borderRadius: 20 },
+        sx,
+      ])}
       contentFit="fill"
     />
   );

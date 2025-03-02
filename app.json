@@ -26,6 +26,7 @@
       }
     },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/kofi-xicara-1024.png",
         "backgroundColor": "#ffffff"

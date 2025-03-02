@@ -3,6 +3,7 @@ module.exports = {
   ignorePatterns: ["dist", "node_modules", "scripts", ".eslintrc.js", "babel.config.js"],
   plugins: ["prettier"],
   rules: {
+    "@typescript-eslint/no-wrapper-object-types": "off",
     "prettier/prettier": [
       "error",
       {

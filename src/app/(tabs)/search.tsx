@@ -2,10 +2,14 @@ import { FlatList, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
+import { Post } from "@/src/requests/services/kofi/models/post";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import { Card } from "react-native-paper";
 
 export default function Search() {
+  const navigator = useRouter();
+
   const sections = [
     {
       title: "Melhores cafés",
@@ -137,8 +141,18 @@ export default function Search() {
     },
   ];
 
+  const openPost = (post: Post) => {
+    navigator.push({
+      pathname: "/post",
+      params: { post: JSON.stringify(post) },
+    });
+  };
+
   const renderCarouselItem = ({ item }: { item: any }) => (
-    <Card style={{ ...styles.card, borderRadius: 4 }}>
+    <Card
+      style={{ ...styles.card, borderRadius: 4 }}
+      onPress={() => openPost(item as Post)} // TODO: fix this when query is done
+    >
       <Image source={{ uri: item.image }} style={styles.image} />
       <ThemedText
         numberOfLines={1}
