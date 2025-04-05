@@ -1,3 +1,5 @@
+import { Address } from "@/src/requests/services/kofi/models/address";
+import { Photo } from "@/src/requests/services/kofi/models/post";
 import requester from "@/src/requests/services/requester";
 import { User } from "./models/user";
 
@@ -36,6 +38,16 @@ export interface EmailSignInInput {
   password: string;
 }
 
+export interface IUpdateUserInput {
+  userId: string;
+  password: string;
+  email: string;
+  username: string | null;
+  phone: string | null;
+  address: Address | null;
+  profilePhoto: Photo | null;
+}
+
 export const userService = {
   emailSignIn: async ({ email, password }: EmailSignInInput): Promise<User> => {
     const res = await requester<User>({
@@ -43,6 +55,24 @@ export const userService = {
       url: "/users/login",
       isAuthenticatedRoute: true,
       body: { type: "email", data: { email, password } },
+    });
+
+    return res.data;
+  },
+  updateUser: async ({
+    userId,
+    address,
+    email,
+    password,
+    phone,
+    profilePhoto,
+    username,
+  }: IUpdateUserInput): Promise<User> => {
+    const res = await requester<User>({
+      method: "PUT",
+      url: `/users/${userId}`,
+      isAuthenticatedRoute: true,
+      body: { address, email, password, phone, profilePhoto, username },
     });
 
     return res.data;

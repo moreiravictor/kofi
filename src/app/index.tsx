@@ -10,7 +10,7 @@ import { Button } from "react-native-paper";
 
 import { KofiLogo } from "@/src/components/KofiLogo";
 import { LightBar } from "@/src/components/LightBar";
-import useSignIn from "@/src/requests/mutations/signIn";
+import useSignIn from "@/src/requests/mutations/useSignIn";
 import { Feather } from "@expo/vector-icons";
 
 export default function SignInScreen() {

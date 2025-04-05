@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [page, setPage] = useState<number>(1);
+  const [page] = useState<number>(1); // TODO: make pagination calls on scroll down
 
   const { data: postsData } = useGetLatestPostsPaginated.useQuery({
     params: { pagination: { limit: 10, page } },

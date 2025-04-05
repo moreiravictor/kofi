@@ -23,6 +23,7 @@ export interface Brand {
   id: string;
   name: string;
   cnpj: string;
+  photo: Photo | null;
 }
 
 export enum TopicType {

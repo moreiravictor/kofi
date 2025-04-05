@@ -2,142 +2,74 @@ import { FlatList, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/src/components/ThemedText";
 import { ThemedView } from "@/src/components/ThemedView";
-import { Post } from "@/src/requests/services/kofi/models/post";
+import useGetTopRecommendations from "@/src/requests/queries/useGetTopRecommendations";
+import {
+  Brand,
+  Cafeteria,
+  Coffee,
+  Post,
+} from "@/src/requests/services/kofi/models/post";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Card } from "react-native-paper";
 
+interface ISectionData {
+  imageUrl: string;
+  title: string;
+  id: string;
+  wholeData: Brand | Coffee | Post | Cafeteria;
+}
+
+interface ISection {
+  title: string;
+  data: ISectionData[];
+}
+
 export default function Search() {
   const navigator = useRouter();
 
-  const sections = [
+  const { data: recommendationsData } = useGetTopRecommendations.useQuery({});
+
+  const sections: ISection[] = [
     {
       title: "Melhores cafés",
-      data: [
-        {
-          id: "1",
-          title: "Café @coffeeandjoy",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "2",
-          title: "Aconchego @hmcoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "3",
-          title: "Café @coffeeandjoy",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "4",
-          title: "Aconchego @hmcoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "5",
-          title: "Café @coffeeandjoy",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "6",
-          title: "Aconchego @hmcoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-      ],
+      data:
+        recommendationsData?.topCoffees?.map((coffee) => ({
+          imageUrl: coffee.photo.url,
+          title: coffee.name,
+          id: coffee.id,
+          wholeData: coffee,
+        })) ?? [],
     },
     {
       title: "Melhores cafeterias",
-      data: [
-        {
-          id: "1",
-          title: "@thecoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "2",
-          title: "@osegredodafelicidade",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "3",
-          title: "@thecoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "4",
-          title: "@osegredodafelicidade",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-      ],
+      data:
+        recommendationsData?.topCafeterias.map((cafeteria) => ({
+          imageUrl: cafeteria.photo.url,
+          title: cafeteria.name,
+          id: cafeteria.id,
+          wholeData: cafeteria,
+        })) ?? [],
     },
     {
-      title: "Melhores receitas",
-      data: [
-        {
-          id: "1",
-          title: "@thecoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "2",
-          title: "@osegredodafelicidade",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "3",
-          title: "@thecoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "4",
-          title: "@osegredodafelicidade",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-      ],
+      title: "Melhores dicas",
+      data:
+        recommendationsData?.topTips.map((tip) => ({
+          imageUrl: tip.photos[0].url,
+          title: `${tip.title} por @${tip.user.username}`,
+          id: tip.id,
+          wholeData: tip,
+        })) ?? [],
     },
     {
       title: "Melhores marcas",
-      data: [
-        {
-          id: "1",
-          title: "@thecoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "2",
-          title: "@osegredodafelicidade",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "3",
-          title: "@thecoffee",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-        {
-          id: "4",
-          title: "@osegredodafelicidade",
-          author: "beatriz",
-          image: "https://i.imgur.com/VQEsGHz.jpeg",
-        },
-      ],
+      data:
+        recommendationsData?.topBrands.map((brand) => ({
+          imageUrl: brand.photo?.url ?? "",
+          title: brand.name,
+          id: brand.id,
+          wholeData: brand,
+        })) ?? [],
     },
   ];
 
@@ -148,17 +80,27 @@ export default function Search() {
     });
   };
 
-  const renderCarouselItem = ({ item }: { item: any }) => (
+  const renderCarouselItem = ({
+    item,
+    section,
+  }: {
+    item: ISectionData;
+    section: string;
+  }) => (
     <Card
       style={{ ...styles.card, borderRadius: 4 }}
-      onPress={() => openPost(item as Post)} // TODO: fix this when query is done
+      onPress={() =>
+        section === "Melhores dicas" ? openPost(item.wholeData as Post) : {}
+      } // TODO: fix this when query is done
     >
-      <Image source={{ uri: item.image }} style={styles.image} />
+      <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <ThemedText
         numberOfLines={1}
         ellipsizeMode="tail"
         style={styles.cardTitle}
-      >{`${item.title} por @${item.author}`}</ThemedText>
+      >
+        {item.title}
+      </ThemedText>
     </Card>
   );
 
@@ -173,7 +115,9 @@ export default function Search() {
 
           <FlatList
             data={section.data}
-            renderItem={renderCarouselItem}
+            renderItem={({ item }) =>
+              renderCarouselItem({ item, section: section.title })
+            }
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}

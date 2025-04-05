@@ -1,14 +1,14 @@
 import { Paginated } from "@/src/requests/services/kofi/models";
 import { Post } from "@/src/requests/services/kofi/models/post";
 import {
-  GetLatestPostsPaginatedInput,
+  IGetLatestPostsPaginatedInput,
   postsService,
 } from "@/src/requests/services/kofi/posts";
 import useQueryWithFeedback from "../../helpers/hooks/useQueryWithFeedback";
 import { UseQueryOptionsType } from "./types";
 
 interface QueryParamsType extends UseQueryOptionsType<Paginated<Post>> {
-  params: GetLatestPostsPaginatedInput;
+  params: IGetLatestPostsPaginatedInput;
 }
 
 const key = "get-latests-posts-paginated";

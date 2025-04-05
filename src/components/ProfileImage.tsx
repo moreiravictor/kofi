@@ -12,7 +12,7 @@ export const ProfileImage = ({
   return (
     <Image
       source={
-        photoUrl
+        !photoUrl
           ? {
               uri: photoUrl,
             }
